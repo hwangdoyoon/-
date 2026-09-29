@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>황도윤의 숙제 줄이기 게임</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- ==================== 1. 게임 시작 전 화면 ==================== -->
+  <div id="start-screen" class="screen">
+    <div class="start-container">
+      
+      <!-- 도윤이 캐릭터 + 시작 말풍선 -->
+      <div class="character-area">
+        <div class="doyoon-avatar normal" id="start-avatar">
+          <svg viewBox="0 0 100 120" class="doyoon-svg">
+            <g class="face-base">
+              <circle cx="50" cy="50" r="30" fill="#ffe0b2"/>
+              <path d="M 20 45 C 20 15, 80 15, 80 45 L 80 52 Q 50 25 20 52 Z" fill="#3e2723"/>
+              <path d="M 22 42 Q 50 15 78 42 Q 50 30 22 42 Z" fill="#3e2723"/>
+              <circle cx="18" cy="50" r="5" fill="#ffe0b2"/>
+              <circle cx="82" cy="50" r="5" fill="#ffe0b2"/>
+            </g>
+            <g class="eyes">
+              <circle cx="38" cy="48" r="4" fill="#212121"/>
+              <circle cx="62" cy="48" r="4" fill="#212121"/>
+            </g>
+            <g class="eyebrows">
+              <path d="M 32 40 Q 38 38 44 40" stroke="#3e2723" stroke-width="2.5" fill="none"/>
+              <path d="M 56 40 Q 62 38 68 40" stroke="#3e2723" stroke-width="2.5" fill="none"/>
+            </g>
+            <ellipse cx="32" cy="56" rx="5" ry="3" fill="#ffab91" opacity="0.7"/>
+            <ellipse cx="68" cy="56" rx="5" ry="3" fill="#ffab91" opacity="0.7"/>
+            <path d="M 43 58 Q 50 64 57 58" stroke="#d84315" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M 30 78 L 70 78 L 78 115 L 22 115 Z" fill="#42a5f5"/>
+            <path d="M 40 78 L 50 90 L 60 78 Z" fill="#ffffff"/>
+          </svg>
+        </div>
+
+        <div class="speech-bubble start-bubble bubble-normal" id="start-speech">
+          내 숙제를 줄여줘!
+        </div>
+      </div>
+
+      <!-- 가운데 시작 박스 -->
+      <div class="center-box">
+        <h1>황도윤의 숙제 줄이기</h1>
+        <p class="description">소수로 나누어 숙제 개수를 1개로 만들어주세요!</p>
+        <button id="start-btn" class="btn primary-btn pulse-anim">도윤이의 숙제를 줄이러 가기</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ==================== 2. 게임 진행 화면 ==================== -->
+  <div id="game-screen" class="screen hidden">
+    
+    <!-- 상단 상태바 -->
+    <header class="game-header">
+      <div class="subject-badge" id="subject-display">과목: 국어</div>
+      <div class="mistake-badge">
+        실패 횟수: <span id="mistake-count">0</span> / 5
+      </div>
+    </header>
+
+    <!-- 대화 및 캐릭터 + 시각적 숙제 더미 영역 -->
+    <section class="dialogue-section">
+      <div class="character-and-books">
+        
+        <!-- 도윤이 캐릭터 -->
+        <div class="character-area">
+          <div class="doyoon-avatar normal" id="game-avatar">
+            <svg viewBox="0 0 100 120" class="doyoon-svg">
+              <g class="face-base">
+                <circle cx="50" cy="50" r="30" id="avatar-face" fill="#ffe0b2"/>
+                <path d="M 20 45 C 20 15, 80 15, 80 45 L 80 52 Q 50 25 20 52 Z" fill="#3e2723"/>
+                <path d="M 22 42 Q 50 15 78 42 Q 50 30 22 42 Z" fill="#3e2723"/>
+                <circle cx="18" cy="50" r="5" fill="#ffe0b2"/>
+                <circle cx="82" cy="50" r="5" fill="#ffe0b2"/>
+              </g>
+              <g class="eyes">
+                <ellipse cx="38" cy="48" rx="4" ry="4" id="eye-left" fill="#212121"/>
+                <ellipse cx="62" cy="48" rx="4" ry="4" id="eye-right" fill="#212121"/>
+              </g>
+              <g class="eyebrows">
+                <path d="M 32 40 Q 38 38 44 40" stroke="#3e2723" stroke-width="2.5" fill="none" id="brow-left"/>
+                <path d="M 56 40 Q 62 38 68 40" stroke="#3e2723" stroke-width="2.5" fill="none" id="brow-right"/>
+              </g>
+              <ellipse cx="32" cy="56" rx="5" ry="3" fill="#ffab91" opacity="0.7"/>
+              <ellipse cx="68" cy="56" rx="5" ry="3" fill="#ffab91" opacity="0.7"/>
+              <path d="M 43 58 Q 50 64 57 58" stroke="#d84315" stroke-width="2.5" fill="none" id="mouth" stroke-linecap="round"/>
+              <path d="M 30 78 L 70 78 L 78 115 L 22 115 Z" fill="#42a5f5" id="avatar-shirt"/>
+              <path d="M 40 78 L 50 90 L 60 78 Z" fill="#ffffff"/>
+            </svg>
+          </div>
+
+          <!-- 상황별 다양하게 변하는 도윤이 말풍선 -->
+          <div class="speech-bubble bubble-normal" id="game-speech">
+            열심히 나누어서 숙제를 줄여줘!
+          </div>
+        </div>
+
+        <!-- 📚 시각적 숙제 더미 (책 쌓기) -->
+        <div class="book-stack-container">
+          <div id="book-stack" class="book-stack"></div>
+          <span class="stack-label">숙제 더미</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 메인 게임 영역 -->
+    <main class="game-main">
+      
+      <!-- 🔥 콤보 표시 뱃지 -->
+      <div id="combo-badge" class="combo-badge hidden">2 COMBO! 🔥</div>
+
+      <!-- 숫자 카드 및 슬라이스 애니메이션 용기 -->
+      <div class="number-card" id="number-card">
+        <span class="card-label">남은 숙제 개수</span>
+        <div class="current-number" id="current-number">120</div>
+      </div>
+
+      <!-- 소수 선택 버튼 -->
+      <div class="prime-action-box">
+        <p class="box-title">나눌 소수 선택 (2, 3, 5, 7, 11)</p>
+        <div class="prime-buttons">
+          <button class="btn prime-btn" data-prime="2">2</button>
+          <button class="btn prime-btn" data-prime="3">3</button>
+          <button class="btn prime-btn" data-prime="5">5</button>
+          <button class="btn prime-btn" data-prime="7">7</button>
+          <button class="btn prime-btn" data-prime="11">11</button>
+        </div>
+      </div>
+
+      <!-- 소인수분해 공식 창 및 과목 변경 -->
+      <div class="formula-container">
+        <div class="formula-header">
+          <h3>소인수분해 공식 기록</h3>
+          <button id="change-subject-btn" class="btn sub-btn">숙제 과목 바꾸기</button>
+        </div>
+        <div class="formula-display" id="formula-display">
+          120 = 
+        </div>
+      </div>
+
+      <!-- 상호작용 버튼 영역 -->
+      <div id="interaction-box" class="interaction-box hidden">
+        <div id="choice-buttons" class="choice-buttons hidden">
+          <button id="apologize-btn" class="btn choice-btn apol-btn">도윤이에게 사과하기 🙇‍♂️</button>
+          <button id="talkback-btn" class="btn choice-btn talk-btn">말대답하기 🗣️</button>
+        </div>
+        <button id="restart-btn" class="btn primary-btn hidden">도윤이의 숙제 다시 줄여주기</button>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>

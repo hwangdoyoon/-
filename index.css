@@ -1,0 +1,473 @@
+/* 기본 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+
+body {
+  background-color: #fef9e7;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.screen {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: #fffde7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ================= 1. 시작 화면 ================= */
+#start-screen {
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #fffde7 0%, #fff59d 100%);
+}
+
+.start-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.character-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.doyoon-avatar {
+  width: 95px;
+  height: 115px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.doyoon-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ================= 💬 다채로운 말풍선 스타일 ================= */
+.speech-bubble {
+  position: relative;
+  border-radius: 20px;
+  padding: 12px 16px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  max-width: 230px;
+  word-break: keep-all;
+  line-height: 1.4;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 8px 14px 8px 0;
+  border-style: solid;
+}
+
+/* 1. 기본 말풍선 (노란색) */
+.bubble-normal {
+  background: #ffffff;
+  border: 3px solid #fbc02d;
+  color: #37474f;
+}
+.bubble-normal::before { border-color: transparent #fbc02d transparent transparent; }
+
+/* 2. 기쁨 말풍선 (에메랄드 그린) */
+.bubble-happy {
+  background: #e8f5e9;
+  border: 3px solid #4caf50;
+  color: #1b5e20;
+}
+.bubble-happy::before { border-color: transparent #4caf50 transparent transparent; }
+
+/* 3. 콤보 & 댄스 피버 말풍선 (통통 튀는 주황) */
+.bubble-dance {
+  background: #fff3e0;
+  border: 3px solid #ff6d00;
+  color: #e65100;
+  animation: bounceBubble 0.6s infinite alternate ease-in-out;
+}
+.bubble-dance::before { border-color: transparent #ff6d00 transparent transparent; }
+
+@keyframes bounceBubble {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+/* 4. ⭐ 10 단위 스페셜 숫자 말풍선 (반짝이는 골드) */
+.bubble-special {
+  background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+  border: 3px solid #fbc02d;
+  color: #f57f17;
+  font-weight: 900;
+  box-shadow: 0 0 15px rgba(251, 192, 45, 0.6);
+  animation: specialGlow 1s infinite alternate;
+}
+.bubble-special::before { border-color: transparent #fbc02d transparent transparent; }
+
+@keyframes specialGlow {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.04); }
+}
+
+/* 5. 슬픔/실패 말풍선 (차분한 파란색) */
+.bubble-sad {
+  background: #e1f5fe;
+  border: 3px solid #0288d1;
+  color: #01579b;
+}
+.bubble-sad::before { border-color: transparent #0288d1 transparent transparent; }
+
+/* 6. 분노 말풍선 (화난 붉은색) */
+.bubble-angry {
+  background: #ffebee;
+  border: 3px solid #d32f2f;
+  color: #b71c1c;
+  font-size: 1.1rem;
+  font-weight: 900;
+  animation: shakeBubble 0.2s infinite;
+}
+.bubble-angry::before { border-color: transparent #d32f2f transparent transparent; }
+
+@keyframes shakeBubble {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-3px, 2px); }
+  100% { transform: translate(3px, -2px); }
+}
+
+/* 메인 타이틀 박스 */
+.center-box {
+  background: white;
+  border-radius: 20px;
+  padding: 25px 20px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(251, 192, 45, 0.2);
+  border: 2px solid #fff176;
+}
+
+.center-box h1 {
+  font-size: 1.8rem;
+  color: #f57f17;
+  margin-bottom: 8px;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #6d4c41;
+  margin-bottom: 20px;
+}
+
+/* 버튼 */
+.btn {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.primary-btn {
+  background-color: #ff9800;
+  color: white;
+  width: 100%;
+}
+
+.pulse-anim {
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* ================= 2. 게임 진행 화면 ================= */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 10px 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 12px;
+}
+
+.subject-badge {
+  font-size: 0.95rem;
+  font-weight: 800;
+  background-color: #ffe082;
+  color: #4e342e;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.mistake-badge {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.character-and-books {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 12px;
+}
+
+.book-stack-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 70px;
+  min-height: 110px;
+}
+
+.book-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.book-item {
+  height: 9px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.stack-label {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #8d6e63;
+  margin-top: 4px;
+}
+
+.combo-badge {
+  align-self: center;
+  background: linear-gradient(45deg, #ff6d00, #ffab00);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(255, 109, 0, 0.4);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.game-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 💥 숫자 카드 및 분열 파티클 연출 (4번 기능) */
+.number-card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 3px solid #ffe082;
+  overflow: visible;
+}
+
+.card-label {
+  font-size: 0.85rem;
+  color: #795548;
+}
+
+.current-number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #e65100;
+  transition: transform 0.2s ease;
+}
+
+/* 숫자 나눌 때 슬라이스 팝핑 애니메이션 */
+.number-pop {
+  animation: numberSlicePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes numberSlicePop {
+  0% { transform: scale(1); color: #e65100; }
+  50% { transform: scale(1.35) rotate(-6deg); color: #2e7d32; }
+  100% { transform: scale(1) rotate(0deg); color: #e65100; }
+}
+
+/* 날아가는 나누기 파티클 조각 */
+.slice-particle {
+  position: absolute;
+  top: 20%;
+  right: 25%;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ff3d00;
+  pointer-events: none;
+  animation: floatParticle 0.6s ease-out forwards;
+}
+
+@keyframes floatParticle {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(30px, -40px) scale(1.5); }
+}
+
+.prime-action-box {
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.box-title {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.prime-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.prime-btn {
+  flex: 1;
+  background-color: #29b6f6;
+  color: white;
+  font-size: 1.25rem;
+  padding: 10px 0;
+}
+
+.formula-container {
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.formula-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #fff59d;
+  padding-bottom: 6px;
+}
+
+.formula-header h3 {
+  font-size: 0.9rem;
+  color: #424242;
+}
+
+.sub-btn {
+  background-color: #78909c;
+  color: white;
+  font-size: 0.75rem;
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+.formula-display {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1565c0;
+  text-align: center;
+  min-height: 26px;
+  word-break: break-all;
+}
+
+.interaction-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.choice-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.choice-btn {
+  flex: 1;
+  font-size: 0.9rem;
+  padding: 12px 6px;
+}
+
+.apol-btn { background-color: #4caf50; color: white; }
+.talk-btn { background-color: #f44336; color: white; }
+
+/* 도윤이 댄스 피버 애니메이션 */
+.dance-anim {
+  animation: dance 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes dance {
+  0% { transform: translateY(0) rotate(-6deg); }
+  100% { transform: translateY(-12px) rotate(6deg); }
+}
+
+/* 오답 발생 시 화면 흔들기 */
+.shake {
+  animation: shake 0.35s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 2px); }
+  40% { transform: translate(6px, -2px); }
+  60% { transform: translate(-4px, 1px); }
+  80% { transform: translate(4px, -1px); }
+}
